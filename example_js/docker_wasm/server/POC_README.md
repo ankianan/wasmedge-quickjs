@@ -5,7 +5,7 @@
 
 # Steps to Run
 ```
-https://github.com/ankianan/wasmedge-quickjs.git
+git clone https://github.com/ankianan/wasmedge-quickjs.git
 cd wasmedge-quickjs/example_js/docker_wasm/server
 sh scripts/build.sh 
 sh scripts/run.sh 
