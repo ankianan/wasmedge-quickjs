@@ -1,5 +1,9 @@
 import { createServer } from 'http';
 
+function print(){
+  console.log(...arguments);
+}
+
 createServer((req, resp) => {
   print("server: req.httpVersion=", req.httpVersion);
   print("server: req.url=", req.url);

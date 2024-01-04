@@ -1,0 +1,9 @@
+FROM scratch AS buildbase
+WORKDIR /src
+
+FROM buildbase AS build
+COPY server.js .
+
+FROM node:18-alpine
+ENTRYPOINT [ "node", "server.mjs" ]
+COPY --link --from=build /src/server.js /server.mjs

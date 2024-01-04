@@ -1,0 +1,29 @@
+services:
+  app:
+    image: secondstate/node-example-server
+    platform: wasi/wasm
+    runtime: io.containerd.wasmedge.v1
+#    ports:
+#     - "8081:8080"
+    expose:
+     - "8080"
+  
+  app_node:
+    image: secondstate/node-example-server_node
+    expose:
+     - "8080"
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+      - app_node
+    ports:
+      - "4000:4000"
+      - "4001:4001"
+networks:
+  default:
+    driver: bridge
+    name: app_net
