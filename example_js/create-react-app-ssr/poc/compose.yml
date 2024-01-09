@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  app:
+    image: local/react-render-wasm
+    platform: wasi/wasm
+    runtime: io.containerd.wasmedge.v1
+    expose:
+     - "8003"
+  
+  app_node:
+    image: local/react-render-node
+    expose:
+     - "3006"
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+      - app_node
+    ports:
+      - "4000:4000"
+      - "4001:4001"
+networks:
+  default:
+    driver: bridge
+    name: app_net

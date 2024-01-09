@@ -1,0 +1,18 @@
+FROM scratch AS buildbase
+WORKDIR /src
+
+FROM buildbase AS build
+COPY ./package.json .
+COPY ./package-lock.json .
+COPY ./server-build/index.node.js .
+COPY ./build build
+
+FROM node:18-alpine
+
+ENTRYPOINT [ "node", "index.node.js" ]
+
+COPY --link --from=build /src/package.json /package.json
+COPY --link --from=build /src/package-lock.json /package-lock.json
+RUN npm ci
+COPY --link --from=build /src/index.node.js /index.node.js
+COPY --link --from=build /src/build /build

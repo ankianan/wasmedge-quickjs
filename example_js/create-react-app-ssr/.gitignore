@@ -1,0 +1,6 @@
+build/
+modules/
+node_modules/
+server-build/
+wasmedge_quickjs.wasm
+poc/output_*
